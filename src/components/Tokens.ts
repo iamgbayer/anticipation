@@ -13,6 +13,13 @@ export const Tokens = {
       500: '#CECECE',
       600: '#656565',
       700: '#000'
+    },
+    support: {
+      100: '#D14E4E',
+      200: '#FFE4E4',
+      300: '#FEEBC8',
+      400: '#5CBF88',
+      500: '#DBF8E8'
     }
   },
   zIndeces: {

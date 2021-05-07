@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box } from 'components'
+import { Box, Bar } from 'components'
 import { theme } from 'styled-tools'
 import { Receivables } from './Receivables'
 import { useGetReceivables } from 'hooks'
@@ -19,12 +19,19 @@ function App() {
   const { online } = useNetworkState()
 
   return (
-    <Container>
-      {!online && <>offline</>}
+    <>
+      {!online && (
+        <Bar>
+          Verifique a sua conexão com a internet, não iremos conseguir exibir as
+          simulações da antecipação.
+        </Bar>
+      )}
 
-      <Form execute={execute} />
-      <Receivables data={receivables} isLoading={isLoading} />
-    </Container>
+      <Container>
+        <Form execute={execute} />
+        <Receivables data={receivables} isLoading={isLoading} />
+      </Container>
+    </>
   )
 }
 
