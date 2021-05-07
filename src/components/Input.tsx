@@ -1,0 +1,145 @@
+import React from 'react'
+import styled from 'styled-components'
+import { space } from 'styled-system'
+import { ifProp, theme } from 'styled-tools'
+
+import { Text } from './Text'
+
+type Props = {
+  value: string | number
+  type: 'text'
+  onChange: any
+  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void
+  placeholder: string
+  error: { has: boolean; message: string }
+  isRequired: boolean
+  id?: string
+  label: string
+  marginTop?: number
+  marginBottom?: number
+  marginRight?: number
+  marginLeft?: number
+  isFull: boolean
+  name: string
+}
+
+const Container = styled.div<{
+  isFull: boolean
+  marginTop?: number
+  marginBottom?: number
+  marginLeft?: number
+  marginRight?: number
+}>`
+  ${space};
+  width: ${ifProp('isFull', '100%', '250px')};
+  display: flex;
+  flex-direction: column;
+  position: relative;
+`
+
+const Inputable = styled.input<{
+  hasError: boolean
+  isRequired: boolean
+  placeholder: string
+}>`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: ${theme('radii.4')};
+  appearance: none;
+  font-family: ${theme('fonts.100')};
+  height: 38px;
+  outline: none;
+  padding: 0 10px;
+
+  color: ${ifProp(
+    'hasError',
+    theme('colors.support.100'),
+    theme('colors.accent.700')
+  )};
+
+  border: 1px solid
+    ${ifProp(
+      'hasError',
+      theme('colors.support.100'),
+      theme('colors.accent.300')
+    )};
+
+  &::placeholder {
+    color: ${ifProp(
+      'hasError',
+      theme('colors.support.100'),
+      theme('colors.accent.700')
+    )};
+  }
+`
+
+const Label = styled.label<{ hasError: boolean }>`
+  font-family: ${theme('fonts.100')};
+  margin-bottom: 5px;
+  color: ${ifProp(
+    'hasError',
+    theme('colors.support.100'),
+    theme('colors.accent.600')
+  )};
+`
+
+export const Input = ({
+  value,
+  type,
+  onChange,
+  onBlur,
+  placeholder,
+  error,
+  isRequired,
+  id,
+  label,
+  marginTop,
+  marginBottom,
+  marginRight,
+  marginLeft,
+  isFull,
+  name
+}: Props) => {
+  return (
+    <Container
+      isFull={isFull}
+      marginBottom={marginBottom}
+      marginTop={marginTop}
+      marginLeft={marginLeft}
+      marginRight={marginRight}
+    >
+      {label && (
+        <Label htmlFor={id} hasError={error.has}>
+          {label}
+        </Label>
+      )}
+
+      <Inputable
+        name={name}
+        id={id}
+        type={type}
+        value={value}
+        hasError={error.has}
+        onChange={onChange}
+        onBlur={onBlur}
+        placeholder={placeholder}
+        isRequired={isRequired}
+      />
+
+      {error.has && <Text fontSize={14}>{error.message}</Text>}
+    </Container>
+  )
+}
+
+Input.defaultProps = {
+  value: '',
+  placeholder: '',
+  type: 'text',
+  onChange: () => {},
+  error: {
+    has: false,
+    message: ''
+  },
+  isRequired: false,
+  isFull: false
+}
