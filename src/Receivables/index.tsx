@@ -34,7 +34,8 @@ export const Receivables = ({ data, isLoading }: Props) => {
             <Box flexDirection="column">
               {data.map(({ days, value }) => (
                 <Text key={days} color="primary.100" marginTop={20}>
-                  {getPrefixByDays(days)} <strong>{toMoney(value)}</strong>
+                  {getPrefixByDays(days)}{' '}
+                  <strong>{toMoney(value.toString())}</strong>
                 </Text>
               ))}
             </Box>
