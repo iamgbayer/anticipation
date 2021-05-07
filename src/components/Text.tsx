@@ -14,7 +14,8 @@ import {
   textAlign,
   FontFamilyProps,
   FontSizeProps,
-  FontWeightProps
+  FontWeightProps,
+  TextAlignProps
 } from 'styled-system'
 import { ifNotProp, ifProp, theme } from 'styled-tools'
 
@@ -25,7 +26,8 @@ interface Props
     FontFamilyProps,
     FontSizeProps,
     SpaceProps,
-    LayoutProps {
+    LayoutProps,
+    TextAlignProps {
   children: React.ReactNode | string | number | (string | number)[]
 }
 
