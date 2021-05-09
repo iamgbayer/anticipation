@@ -9,10 +9,8 @@ type Props = {
   response: Res<ResponsePayload>
 }
 
-const URI = 'https://frontend-challenge-7bu3nxh76a-uc.a.run.app'
-
 export const RESOURCES = {
-  GET_RECEIVABLES: () => `${URI}`
+  GET_RECEIVABLES: () => `${process.env.REACT_APP_API_URL}`
 }
 
 const getError = (error?: string) => {
