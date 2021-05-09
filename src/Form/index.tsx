@@ -63,13 +63,14 @@ export const Form = ({ execute, shouldFieldsBeDisabled }: Props) => {
     message: errors[attribute]
   })
 
-  const onChangeFilteringInvalidCharacters = (field: string) => (
+  const applyFilterAndSetValueByField = (field: string) => (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setFieldValue(
-      field,
-      parseInt(get(event, 'target.value').replace(/R\$|,|\./g, ''), 10)
-    )
+    const value = get(event, 'target.value')
+    const applyWhenAmount = parseInt(value.replace(/R\$|,|\./g, ''), 10)
+    const applyWhenMdr = parseFloat(value.replace('%', ''))
+
+    setFieldValue(field, field === 'amount' ? applyWhenAmount : applyWhenMdr)
   }
 
   return (
@@ -83,7 +84,7 @@ export const Form = ({ execute, shouldFieldsBeDisabled }: Props) => {
         label="Informe o valor da venda *"
         marginTop={25}
         error={getError('amount')}
-        onChange={onChangeFilteringInvalidCharacters('amount')}
+        onChange={applyFilterAndSetValueByField('amount')}
         value={toMoney(amount)}
         isDisabled={shouldFieldsBeDisabled}
       />
@@ -107,7 +108,7 @@ export const Form = ({ execute, shouldFieldsBeDisabled }: Props) => {
         label="Informe o percentual de MDR *"
         suffix="%"
         isDisabled={shouldFieldsBeDisabled}
-        onChange={onChangeFilteringInvalidCharacters('mdr')}
+        onChange={applyFilterAndSetValueByField('mdr')}
         error={getError('mdr')}
         marginTop={25}
       />
