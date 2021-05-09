@@ -24,7 +24,8 @@ test('Should just execute get receivables when all fields are filled correctly',
     expect(spyExecute).toBeCalledWith({
       amount: AMOUNT,
       installments: 1,
-      mdr: 1
+      mdr: 1,
+      days: 120
     })
   )
 })

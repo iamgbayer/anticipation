@@ -23,7 +23,8 @@ export const Tokens = {
     }
   },
   zIndeces: {
-    50: 50
+    50: 50,
+    60: 60
   },
   radii: {
     4: '4px',

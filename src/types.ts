@@ -7,4 +7,5 @@ export type GetReceivablesPayload = {
   amount: number
   mdr: number
   installments: number
+  days: number
 }

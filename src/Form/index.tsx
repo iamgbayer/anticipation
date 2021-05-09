@@ -5,7 +5,7 @@ import get from 'lodash/get'
 import { GetReceivablesPayload } from 'types'
 import { validationSchema } from './index.schema'
 import NumberFormat from 'react-number-format'
-import { head } from 'lodash'
+import { head, last } from 'lodash'
 import { toMoney } from 'helpers'
 
 const options = [
@@ -23,6 +23,26 @@ const options = [
   { value: 12, text: '12 parcelas' }
 ]
 
+export const getDays = (installments: number) => {
+  const days = [
+    { value: 1, text: 'Amanhã' },
+    { value: 15, text: 'Em 15 dias' },
+    { value: 30, text: 'Em 30 dias' },
+    { value: 60, text: 'Em 60 dias' },
+    { value: 90, text: 'Em 90 dias' },
+    { value: 120, text: 'Em 120 dias' }
+  ]
+
+  const mapping: Record<number, number> = {
+    1: 30,
+    2: 60,
+    3: 90,
+    4: 120
+  }
+
+  return days.filter(({ value }) => value <= mapping[installments])
+}
+
 type Props = {
   execute: (getReceivablesPayload: GetReceivablesPayload) => void
   shouldFieldsBeDisabled: boolean
@@ -35,12 +55,13 @@ export const Form = ({ execute, shouldFieldsBeDisabled }: Props) => {
     initialValues: {
       amount: 0,
       mdr: 0,
-      installments: 1
+      installments: 1,
+      days: 120
     },
     onSubmit: () => {}
   })
 
-  const { amount, mdr, installments } = values
+  const { amount, mdr, installments, days } = values
 
   useEffect(() => {
     const canExecuteGetReceivables =
@@ -52,7 +73,8 @@ export const Form = ({ execute, shouldFieldsBeDisabled }: Props) => {
       execute({
         amount,
         mdr,
-        installments
+        installments,
+        days
       })
   }, [isValid, values, errors])
 
@@ -99,6 +121,14 @@ export const Form = ({ execute, shouldFieldsBeDisabled }: Props) => {
       <Text fontSize={11} color="accent.500" marginTop="2px">
         Máximo de 12 parcelas
       </Text>
+
+      <Select
+        marginTop={25}
+        label="Quando você quer receber?"
+        options={getDays(installments)}
+        onChange={(value) => setFieldValue('days', value)}
+        defaultValue={get(last(getDays(installments)), 'text')}
+      />
 
       <NumberFormat
         id="mdr"

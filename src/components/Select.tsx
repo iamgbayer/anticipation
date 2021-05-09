@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import styled from 'styled-components'
 import { space, SpaceProps } from 'styled-system'
 import { ifProp, theme } from 'styled-tools'
@@ -36,7 +36,6 @@ const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
   position: relative;
-  z-index: ${theme('zIndeces.50')};
 `
 
 const Selectable = styled.div<{ isVisible: boolean }>`
@@ -61,6 +60,7 @@ const Options = styled.div<{ isVisible: boolean }>`
   width: 100%;
   top: calc(100% + 4px);
   position: absolute;
+  z-index: ${theme('zIndeces.60')};
   border-radius: ${theme('radii.4')};
   list-style: none;
   padding: 1px;
@@ -109,7 +109,9 @@ export const Select = ({
 
   const whenFocus = () => setIsFocused(!isFocused)
 
-  const hasOptionSelected = useMemo(() => 'Selecionar' !== selected, [selected])
+  useEffect(() => {
+    setSelected(defaultValue)
+  }, [defaultValue])
 
   return (
     <Container
