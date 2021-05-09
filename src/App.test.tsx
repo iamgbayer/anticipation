@@ -25,6 +25,8 @@ test('Should message be visible when it has not network', async () => {
 })
 
 test('Should fill fields and see receivables correctly', async () => {
+  jest.spyOn(navigator, 'onLine', 'get').mockReturnValueOnce(true)
+
   renderWithDependencies(<App />)
 
   userEvent.type(screen.getByTestId('amount'), '10000')

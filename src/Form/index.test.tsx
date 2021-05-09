@@ -8,7 +8,9 @@ const spyExecute = jest.fn()
 const AMOUNT = 1000
 
 test('Should just execute get receivables when all fields are filled correctly', async () => {
-  renderWithDependencies(<Form execute={spyExecute} />)
+  renderWithDependencies(
+    <Form execute={spyExecute} shouldFieldsBeDisabled={false} />
+  )
 
   expect(screen.getByText('Simule sua Antecipação')).toBeInTheDocument()
 
@@ -28,7 +30,9 @@ test('Should just execute get receivables when all fields are filled correctly',
 })
 
 test('Should see error message when amount is not correctly filled', async () => {
-  renderWithDependencies(<Form execute={spyExecute} />)
+  renderWithDependencies(
+    <Form execute={spyExecute} shouldFieldsBeDisabled={false} />
+  )
 
   userEvent.type(screen.getByTestId('amount'), '100')
   userEvent.type(screen.getByTestId('mdr'), '10')
@@ -43,7 +47,9 @@ test('Should see error message when amount is not correctly filled', async () =>
 })
 
 test('Should see error message when mdr is not correctly filled', async () => {
-  renderWithDependencies(<Form execute={spyExecute} />)
+  renderWithDependencies(
+    <Form execute={spyExecute} shouldFieldsBeDisabled={false} />
+  )
 
   userEvent.type(screen.getByTestId('mdr'), '120')
   userEvent.type(screen.getByTestId('amount'), '1000')
@@ -57,4 +63,5 @@ test('Should see error message when mdr is not correctly filled', async () => {
   expect(spyExecute).not.toBeCalled()
 })
 
+test.todo('Should fields be disabled')
 test.todo('Should select different installments')
