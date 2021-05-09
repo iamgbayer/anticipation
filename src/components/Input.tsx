@@ -8,8 +8,8 @@ import { Text } from './Text'
 type Props = {
   value: string | number
   type: 'text'
-  onChange: any
-  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
   placeholder: string
   error: { has: boolean; message: string }
   isRequired: boolean
@@ -98,7 +98,8 @@ export const Input = ({
   marginRight,
   marginLeft,
   isFull,
-  name
+  name,
+  ...props
 }: Props) => {
   return (
     <Container
@@ -115,6 +116,7 @@ export const Input = ({
       )}
 
       <Inputable
+        {...props}
         name={name}
         id={id}
         type={type}
@@ -126,7 +128,15 @@ export const Input = ({
         isRequired={isRequired}
       />
 
-      {error.has && <Text fontSize={14}>{error.message}</Text>}
+      {error.has && (
+        <Text
+          fontSize={14}
+          marginTop="2px"
+          color={error.has ? 'support.100' : 'accent.600'}
+        >
+          {error.message}
+        </Text>
+      )}
     </Container>
   )
 }

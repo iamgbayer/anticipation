@@ -1,5 +1,5 @@
 export type Receivable = {
-  days: string
+  days: number
   value: number
 }
 

@@ -29,7 +29,7 @@ function App() {
 
       <Container>
         <Form execute={execute} />
-        <Receivables data={receivables} isLoading={isLoading} />
+        <Receivables data={receivables} isLoading={isLoading} error={error} />
       </Container>
     </>
   )

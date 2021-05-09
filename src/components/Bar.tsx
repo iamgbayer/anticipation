@@ -14,4 +14,7 @@ export const Bar = styled(Box)`
   color: ${theme('colors.accent.100')};
   text-align: center;
   padding: 5px 10px;
+  position: absolute;
+  left: 0;
+  top: 0;
 `

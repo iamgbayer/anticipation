@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 import { Box, Text, Input, Select } from 'components'
 import { useFormik } from 'formik'
 import get from 'lodash/get'
-import { toMoney } from 'helpers'
 import { GetReceivablesPayload } from 'types'
 import { validationSchema } from './index.schema'
 import NumberFormat from 'react-number-format'
 import { head } from 'lodash'
+import { toMoney } from 'helpers'
 
 const options = [
   { value: 1, text: '1 parcela' },
@@ -28,20 +28,12 @@ type Props = {
 }
 
 export const Form = ({ execute }: Props) => {
-  const {
-    values,
-    setFieldValue,
-    errors,
-    isValid,
-    handleBlur,
-    touched
-  } = useFormik({
+  const { values, setFieldValue, errors, isValid } = useFormik({
     validateOnChange: true,
-    isInitialValid: false,
     validationSchema,
     initialValues: {
-      amount: '',
-      mdr: '',
+      amount: 0,
+      mdr: 0,
       installments: 1
     },
     onSubmit: () => {}
@@ -53,17 +45,17 @@ export const Form = ({ execute }: Props) => {
     const canExecuteGetReceivables =
       isValid &&
       Object.keys(errors).length === 0 &&
-      Object.keys(touched).length === 2
+      validationSchema.isValidSync(values)
 
     canExecuteGetReceivables &&
       execute({
-        amount: parseFloat(amount),
-        mdr: parseFloat(mdr),
+        amount,
+        mdr,
         installments
       })
-  }, [isValid, values, errors, touched])
+  }, [isValid, values, errors])
 
-  const getError = (attribute: any) => ({
+  const getError = (attribute: string) => ({
     //@ts-ignore
     has: !!errors[attribute],
     //@ts-ignore
@@ -72,14 +64,10 @@ export const Form = ({ execute }: Props) => {
 
   const onChangeFilteringInvalidCharacters = (field: string) => (
     event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  ): void => {
     setFieldValue(
       field,
-      get(event, 'target.value')
-        .replace('%', '')
-        .replace('R$', '')
-        .replace(',', '.')
-        .trim('')
+      parseInt(get(event, 'target.value').replace(/R\$|,|\./g, ''), 10)
     )
   }
 
@@ -87,24 +75,15 @@ export const Form = ({ execute }: Props) => {
     <Box flexDirection="column" padding="40px 55px">
       <Text fontSize={24}>Simule sua Antecipação</Text>
 
-      <NumberFormat
+      <Input
         id="amount"
         name="amount"
+        data-testid="amount"
         label="Informe o valor da venda *"
         marginTop={25}
         error={getError('amount')}
-        format={toMoney}
-        onBlur={handleBlur}
         onChange={onChangeFilteringInvalidCharacters('amount')}
-        value={amount}
-        prefix="R$"
-        customInput={Input}
-        allowEmptyFormatting
-        allowLeadingZeros
-        thousandSeparator="."
-        fixedDecimalScale
-        decimalScale={2}
-        decimalSeparator=","
+        value={toMoney(amount)}
       />
 
       <Select
@@ -121,12 +100,13 @@ export const Form = ({ execute }: Props) => {
       <NumberFormat
         id="mdr"
         name="mdr"
+        data-testid="mdr"
         customInput={Input}
         label="Informe o percentual de MDR *"
         suffix="%"
         onChange={onChangeFilteringInvalidCharacters('mdr')}
+        error={getError('mdr')}
         marginTop={25}
-        onBlur={handleBlur}
       />
     </Box>
   )

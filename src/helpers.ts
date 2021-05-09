@@ -1,14 +1,5 @@
-export const toMoney = (value: string): string => {
-  if (!Number(value)) {
-    return ''
-  }
+import Dinero from 'dinero.js'
 
-  const amount = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  }).format(parseFloat(value) / 100)
+Dinero.defaultCurrency = 'BRL'
 
-  return amount
-}
-
-export const filterOnlyNumbers = (value: string) => value.replace(/\D/g, '')
+export const toMoney = (amount: number) => Dinero({ amount }).toFormat()

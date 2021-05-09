@@ -1,5 +1,5 @@
-import { RESOURCES } from 'api'
-import { useCallback, useEffect, useState } from 'react'
+import { makeInterceptorsResolver, RESOURCES } from 'api'
+import { useCallback, useMemo, useState } from 'react'
 import { GetReceivablesPayload, Receivable } from 'types'
 import useFetch from 'use-http'
 import debounce from 'lodash.debounce'
@@ -7,14 +7,15 @@ import debounce from 'lodash.debounce'
 export const useGetReceivables = () => {
   const [isLoading, setIsLoading] = useState(false)
   const { post, data, error } = useFetch(RESOURCES.GET_RECEIVABLES(), {
-    data: []
+    data: [],
+    interceptors: makeInterceptorsResolver()
   })
 
   const execute = useCallback(
     debounce(({ amount, mdr, installments }: GetReceivablesPayload) => {
       const makeGetReceivablesPayload = () => ({
-        amount: parseFloat(amount.toString()) * 100,
-        mdr: parseFloat(mdr.toString()),
+        amount,
+        mdr,
         installments
       })
 
@@ -24,12 +25,18 @@ export const useGetReceivables = () => {
     []
   )
 
+  const getReceivables = useMemo(
+    () => (data: Record<string, number>): Array<Receivable> =>
+      Object.entries(data).map(([days, value]) => ({
+        days: Number(days),
+        value
+      })),
+    [data]
+  )
+
   return {
     execute,
-    receivables: Object.entries(data).map(([days, value]) => ({
-      days,
-      value
-    })) as Array<Receivable>,
+    receivables: getReceivables(data),
     error,
     isLoading
   }

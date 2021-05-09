@@ -1,5 +1,6 @@
 import { Box, Text } from 'components'
 import { toMoney } from 'helpers'
+import { isNil } from 'lodash'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import { Receivable } from 'types'
@@ -8,6 +9,7 @@ import { Skeleton } from './Skeleton'
 type Props = {
   data: Array<Receivable>
   isLoading: boolean
+  error: any
 }
 
 const Container = styled(Box)`
@@ -15,12 +17,12 @@ const Container = styled(Box)`
   padding: 40px 55px;
 `
 
-export const Receivables = ({ data, isLoading }: Props) => {
-  const getPrefixByDays = (days: string) =>
-    days === String(1) ? 'Amanhã:' : `Em ${days} dias:`
+export const Receivables = ({ data, isLoading, error }: Props) => {
+  const getPrefixByDays = (days: number) =>
+    days === 1 ? 'Amanhã: ' : `Em ${days} dias: `
 
   const canRenderContent = data.length > 0 && !isLoading
-  const canRenderEmptyState = data.length === 0 && !isLoading
+  const canRenderEmptyState = data.length === 0 && !isLoading && isNil(error)
 
   return (
     <>
@@ -33,12 +35,28 @@ export const Receivables = ({ data, isLoading }: Props) => {
 
             <Box flexDirection="column">
               {data.map(({ days, value }) => (
-                <Text key={days} color="primary.100" marginTop={20}>
-                  {getPrefixByDays(days)}{' '}
-                  <strong>{toMoney(value.toString())}</strong>
+                <Text
+                  data-testid="receivable"
+                  key={days}
+                  color="primary.100"
+                  marginTop={20}
+                >
+                  {getPrefixByDays(days)}
+                  <strong>{toMoney(value)}</strong>
                 </Text>
               ))}
             </Box>
+          </Box>
+        )}
+
+        {error && (
+          <Box
+            justifyContent="center"
+            alignItems="center"
+            maxWidth={140}
+            height="100%"
+          >
+            <Text textAlign="center">{error.message}</Text>
           </Box>
         )}
 
