@@ -28,7 +28,7 @@ function App() {
       )}
 
       <Container>
-        <Form execute={execute} />
+        <Form execute={execute} shouldFieldsBeDisabled={!online} />
         <Receivables data={receivables} isLoading={isLoading} error={error} />
       </Container>
     </>

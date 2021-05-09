@@ -9,7 +9,7 @@ import { Skeleton } from './Skeleton'
 type Props = {
   data: Array<Receivable>
   isLoading: boolean
-  error: any
+  error: Error | undefined
 }
 
 const Container = styled(Box)`

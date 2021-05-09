@@ -19,6 +19,7 @@ type Props = {
   marginBottom?: number
   marginRight?: number
   marginLeft?: number
+  isDisabled?: boolean
   isFull: boolean
   name: string
 }
@@ -94,6 +95,7 @@ export const Input = ({
   id,
   label,
   marginTop,
+  isDisabled,
   marginBottom,
   marginRight,
   marginLeft,
@@ -126,6 +128,7 @@ export const Input = ({
         onBlur={onBlur}
         placeholder={placeholder}
         isRequired={isRequired}
+        disabled={isDisabled}
       />
 
       {error.has && (

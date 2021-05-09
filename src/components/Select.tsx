@@ -8,8 +8,22 @@ import { Icon } from './Icon'
 import { Text } from './Text'
 
 type OptionProps = {
-  value: string
+  value: number | string
   text: string
+}
+
+type Props = {
+  options: Array<OptionProps>
+  defaultValue?: string
+  onChange: (value: number | string) => void
+  label: string
+  marginTop?: number
+  marginBottom?: number
+  marginRight?: number
+  marginLeft?: number
+  isRequired?: boolean
+  isDisabled?: boolean
+  isFull?: boolean
 }
 
 interface ContainerProps extends SpaceProps {
@@ -69,12 +83,12 @@ export const Select = ({
   defaultValue = 'Selecionar',
   label,
   onChange = () => {},
-  isFull,
+  isFull = false,
   marginTop,
   marginLeft,
   marginRight,
   marginBottom
-}: any) => {
+}: Props) => {
   const [isVisible, setIsVisible] = useState(false)
   const [selected, setSelected] = useState(defaultValue)
   const [isFocused, setIsFocused] = useState(false)

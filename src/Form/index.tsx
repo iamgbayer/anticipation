@@ -25,9 +25,10 @@ const options = [
 
 type Props = {
   execute: (getReceivablesPayload: GetReceivablesPayload) => void
+  shouldFieldsBeDisabled: boolean
 }
 
-export const Form = ({ execute }: Props) => {
+export const Form = ({ execute, shouldFieldsBeDisabled }: Props) => {
   const { values, setFieldValue, errors, isValid } = useFormik({
     validateOnChange: true,
     validationSchema,
@@ -84,13 +85,14 @@ export const Form = ({ execute }: Props) => {
         error={getError('amount')}
         onChange={onChangeFilteringInvalidCharacters('amount')}
         value={toMoney(amount)}
+        isDisabled={shouldFieldsBeDisabled}
       />
 
       <Select
         marginTop={25}
         label="Em quantas parcelas *"
         options={options}
-        onChange={(value: number) => setFieldValue('installments', value)}
+        onChange={(value) => setFieldValue('installments', value)}
         defaultValue={get(head(options), 'text')}
       />
       <Text fontSize={11} color="accent.500" marginTop="2px">
@@ -104,6 +106,7 @@ export const Form = ({ execute }: Props) => {
         customInput={Input}
         label="Informe o percentual de MDR *"
         suffix="%"
+        isDisabled={shouldFieldsBeDisabled}
         onChange={onChangeFilteringInvalidCharacters('mdr')}
         error={getError('mdr')}
         marginTop={25}
