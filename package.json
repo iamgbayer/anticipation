@@ -41,7 +41,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "cross-env NODE_ICU_DATA=node_modules/full-icu react-scripts test",
-    "eject": "react-scripts eject"
+    "test:staged": "yarn test --watchAll=false --findRelatedTests"
   },
   "eslintConfig": {
     "extends": [
@@ -61,7 +61,14 @@
       "last 1 safari version"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "devDependencies": {
+    "husky": "^4.3.8",
+    "lint-staged": "^11.0.0",
     "@types/dinero.js": "^1.6.5",
     "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.head": "^4.0.6",

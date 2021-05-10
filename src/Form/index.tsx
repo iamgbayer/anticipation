@@ -4,9 +4,9 @@ import { useFormik } from 'formik'
 import get from 'lodash.get'
 import head from 'lodash.head'
 import { GetReceivablesPayload } from 'types'
-import { validationSchema } from './index.schema'
 import NumberFormat from 'react-number-format'
 import { toMoney } from 'helpers'
+import { validationSchema } from './index.schema'
 
 const options = [
   { value: 1, text: '1 parcela' },
