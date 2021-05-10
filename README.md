@@ -17,3 +17,8 @@ Running the application
 ```
 yarn start
 ```
+
+Running unit and integration tests
+```
+yarn test
+```
