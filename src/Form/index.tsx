@@ -57,17 +57,15 @@ export const Form = ({ execute, shouldFieldsBeDisabled }: Props) => {
   }, [isValid, values, errors])
 
   const getError = (attribute: string) => ({
-    //@ts-ignore
-    has: !!errors[attribute],
-    //@ts-ignore
-    message: errors[attribute]
+    has: !!get(errors, attribute),
+    message: get(errors, attribute)
   })
 
   const applyFilterAndSetValueByField = (field: string) => (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const value = get(event, 'target.value')
-    const applyWhenAmount = parseInt(value.replace(/R\$|,|\./g, ''), 10)
+    const applyWhenAmount = parseInt(value.replace(/R\$|,|\./g, ''))
     const applyWhenMdr = parseFloat(value.replace('%', ''))
 
     setFieldValue(field, field === 'amount' ? applyWhenAmount : applyWhenMdr)
