@@ -1,15 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
-import reportWebVitals from './reportWebVitals'
 import { ThemeProvider } from 'styled-components'
-import { Tokens, Reset } from 'components'
+import reportWebVitals from './reportWebVitals'
 import { register } from './serviceWorkerRegistration'
+import { Anticipation } from 'pages'
+import { Tokens, Reset } from 'components'
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={Tokens}>
-      <App />
+      <Anticipation />
       <Reset />
     </ThemeProvider>
   </React.StrictMode>,

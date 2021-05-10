@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box, Bar } from 'components'
 import { theme } from 'styled-tools'
-import { Receivables } from './Receivables'
+import { Receivables } from './components/Receivables'
 import { useGetReceivables } from 'hooks'
-import { Form } from 'Form'
+import { Form } from 'pages/Anticipation/components/Form'
 import { useNetworkState } from 'react-use'
 
 const Container = styled(Box)`
@@ -14,7 +14,7 @@ const Container = styled(Box)`
   border-radius: ${theme('radii.4')};
 `
 
-function App() {
+export const Anticipation = () => {
   const { execute, receivables, isLoading, error } = useGetReceivables()
   const { online } = useNetworkState()
 
@@ -34,5 +34,3 @@ function App() {
     </>
   )
 }
-
-export default App

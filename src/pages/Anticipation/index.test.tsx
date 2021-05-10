@@ -1,13 +1,13 @@
 import React from 'react'
 import { screen, waitFor } from '@testing-library/react'
 import { renderWithDependencies } from 'testHelpers'
-import App from './App'
+import { Anticipation } from './index'
 import userEvent from '@testing-library/user-event'
 
 test('Should message not be visible when it has network', async () => {
   jest.spyOn(navigator, 'onLine', 'get').mockReturnValueOnce(true)
 
-  renderWithDependencies(<App />)
+  renderWithDependencies(<Anticipation />)
 
   expect(
     screen.queryByText(/Verifique a sua conexão com a internet/i)
@@ -17,7 +17,7 @@ test('Should message not be visible when it has network', async () => {
 test('Should message be visible when it has not network', async () => {
   jest.spyOn(navigator, 'onLine', 'get').mockReturnValueOnce(false)
 
-  renderWithDependencies(<App />)
+  renderWithDependencies(<Anticipation />)
 
   expect(
     screen.queryByText(/Verifique a sua conexão com a internet/i)
@@ -27,7 +27,7 @@ test('Should message be visible when it has not network', async () => {
 test('Should fill fields and see receivables correctly', async () => {
   jest.spyOn(navigator, 'onLine', 'get').mockReturnValueOnce(true)
 
-  renderWithDependencies(<App />)
+  renderWithDependencies(<Anticipation />)
 
   userEvent.type(screen.getByTestId('amount'), '10000')
   userEvent.type(screen.getByTestId('mdr'), '1')
