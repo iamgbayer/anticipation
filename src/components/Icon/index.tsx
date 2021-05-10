@@ -1,4 +1,4 @@
-import get from 'lodash/get'
+import get from 'lodash.get'
 import React, { memo, useContext } from 'react'
 import styled, { css, ThemeContext } from 'styled-components'
 import { space } from 'styled-system'

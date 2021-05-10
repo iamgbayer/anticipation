@@ -1,5 +1,5 @@
 import { Interceptors, Res } from 'use-http'
-import get from 'lodash/get'
+import get from 'lodash.get'
 
 type ResponsePayload = {
   message?: string

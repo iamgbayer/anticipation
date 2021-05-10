@@ -1,6 +1,5 @@
 import { Box, Text } from 'components'
 import { toMoney } from 'helpers'
-import { isNil } from 'lodash'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import { Receivable } from 'types'
@@ -9,7 +8,7 @@ import { Skeleton } from './Skeleton'
 type Props = {
   data: Array<Receivable>
   isLoading: boolean
-  error: Error | undefined
+  error: Error | undefined | null
 }
 
 const Container = styled(Box)`
@@ -22,7 +21,8 @@ export const Receivables = ({ data, isLoading, error }: Props) => {
     days === 1 ? 'Amanhã: ' : `Em ${days} dias: `
 
   const canRenderContent = data.length > 0 && !isLoading
-  const canRenderEmptyState = data.length === 0 && !isLoading && isNil(error)
+  const canRenderEmptyState =
+    data.length === 0 && !isLoading && (error === undefined || error === null)
 
   return (
     <>

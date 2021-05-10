@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { Box, Text, Input, Select } from 'components'
 import { useFormik } from 'formik'
-import get from 'lodash/get'
+import get from 'lodash.get'
+import head from 'lodash.head'
 import { GetReceivablesPayload } from 'types'
 import { validationSchema } from './index.schema'
 import NumberFormat from 'react-number-format'
-import { head } from 'lodash'
 import { toMoney } from 'helpers'
 
 const options = [
