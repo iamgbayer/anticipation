@@ -63,5 +63,5 @@ test('Should see error message when mdr is not correctly filled', async () => {
   expect(spyExecute).not.toBeCalled()
 })
 
-test.todo('Should fields be disabled')
+test.todo('Should fields be disabled when offline')
 test.todo('Should select different installments')

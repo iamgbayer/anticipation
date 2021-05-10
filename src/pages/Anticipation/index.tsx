@@ -2,9 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { Box, Bar } from 'components'
 import { theme } from 'styled-tools'
-import { Receivables } from './components/Receivables'
+import { Receivables, Form } from './components'
 import { useGetReceivables } from 'hooks'
-import { Form } from 'pages/Anticipation/components/Form'
 import { useNetworkState } from 'react-use'
 
 const Container = styled(Box)`
